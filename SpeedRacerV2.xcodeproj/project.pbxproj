@@ -79,6 +79,8 @@
 		DDA8CED920665E280041F065 /* star_kids.png in Resources */ = {isa = PBXBuildFile; fileRef = DDA8CE9920665E270041F065 /* star_kids.png */; };
 		DDA8CEDA20665E280041F065 /* number0.png in Resources */ = {isa = PBXBuildFile; fileRef = DDA8CE9A20665E270041F065 /* number0.png */; };
 		DDA8CEDB20665E280041F065 /* walking5.png in Resources */ = {isa = PBXBuildFile; fileRef = DDA8CE9B20665E270041F065 /* walking5.png */; };
+		DDA8CEDD2066623D0041F065 /* RacerBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA8CEDC2066623D0041F065 /* RacerBehaviour.swift */; };
+		DDA8CEDF206663290041F065 /* RacerProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA8CEDE206663290041F065 /* RacerProtocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +179,8 @@
 		DDA8CE9920665E270041F065 /* star_kids.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star_kids.png; path = ../../../Downloads/images/star_kids.png; sourceTree = "<group>"; };
 		DDA8CE9A20665E270041F065 /* number0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = number0.png; path = ../../../Downloads/images/number0.png; sourceTree = "<group>"; };
 		DDA8CE9B20665E270041F065 /* walking5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = walking5.png; path = ../../../Downloads/images/walking5.png; sourceTree = "<group>"; };
+		DDA8CEDC2066623D0041F065 /* RacerBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacerBehaviour.swift; sourceTree = "<group>"; };
+		DDA8CEDE206663290041F065 /* RacerProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacerProtocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +302,8 @@
 				DD0D7B61206656A90076C05D /* LaunchScreen.storyboard */,
 				DD0D7B64206656A90076C05D /* Info.plist */,
 				DD0D7B5C206656A90076C05D /* SpeedRacerV2.xcdatamodeld */,
+				DDA8CEDC2066623D0041F065 /* RacerBehaviour.swift */,
+				DDA8CEDE206663290041F065 /* RacerProtocols.swift */,
 			);
 			path = SpeedRacerV2;
 			sourceTree = "<group>";
@@ -519,7 +525,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD0D7B56206656A90076C05D /* AppDelegate.swift in Sources */,
+				DDA8CEDD2066623D0041F065 /* RacerBehaviour.swift in Sources */,
 				DD0D7B5E206656A90076C05D /* SpeedRacerV2.xcdatamodeld in Sources */,
+				DDA8CEDF206663290041F065 /* RacerProtocols.swift in Sources */,
 				DD0D7B87206656E60076C05D /* RacerMainController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
