@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SpeedRacerBehaviour: UIDynamicBehavior,collisionDelegate, UICollisionBehaviorDelegate{
+class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate{
     
     
     
@@ -61,6 +61,23 @@ class SpeedRacerBehaviour: UIDynamicBehavior,collisionDelegate, UICollisionBehav
         
     }
     //@objc public func addCarCollision(barrierName :String, mainCar: UIImageView){
+    func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, at p: CGPoint) {
+        print("called this again")
+        //let items = item as! CustomUIIMageView
+        //print(items.imageTag!)
+        // let viewcontroller = controller as! ViewController
+        //viewcontroller.score -= 10
+        //viewcontroller.ScoreKeeper.text = String(score)
+        
+        
+        
+        
+    }
+    
+    
+}
+extension SpeedRacerBehaviour : collisionDelegate {
+   
     @objc func addCarCollision(_ timer:Timer){
         let result = timer.userInfo as! Dictionary<String,Any>
         let barrierName = (result["barrierName"] as! String)
@@ -72,19 +89,6 @@ class SpeedRacerBehaviour: UIDynamicBehavior,collisionDelegate, UICollisionBehav
         collisionBehaviour.addBoundary(withIdentifier: barrierName as NSCopying, for: UIBezierPath(rect:mainCar.frame))
         //collisionBehaviour.collisionDelegate = dynamicAnimator?.referenceView as? UICollisionBehaviorDelegate
         collisionBehaviour.collisionDelegate = self
-    }
-    
-    func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, at p: CGPoint) {
-        print("called this again")
-        //let items = item as! CustomUIIMageView
-        print(items.imageTag!)
-       // let viewcontroller = controller as! ViewController
-        viewcontroller.score -= 10
-        viewcontroller.ScoreKeeper.text = String(score)
-        
-        
-        
-        
     }
     
 }
