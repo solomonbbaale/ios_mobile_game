@@ -90,5 +90,12 @@ extension SpeedRacerBehaviour : collisionDelegate {
         //collisionBehaviour.collisionDelegate = dynamicAnimator?.referenceView as? UICollisionBehaviorDelegate
         collisionBehaviour.collisionDelegate = self
     }
+    @objc func addCarCollision(barrierName: String, image:MovableUIIMageView){
+        collisionBehaviour.removeAllBoundaries()
+        collisionBehaviour.addBoundary(withIdentifier: barrierName as NSCopying, for: UIBezierPath(rect:image.frame))
+        //collisionBehaviour.collisionDelegate = dynamicAnimator?.referenceView as? UICollisionBehaviorDelegate
+        collisionBehaviour.collisionDelegate = self
+        print("recieved call \(String(describing: image.startLocation))")
+    }
     
 }

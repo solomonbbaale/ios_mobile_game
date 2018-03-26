@@ -15,7 +15,8 @@ class RacerMainController: UIViewController {
     
     
     @IBOutlet var mainRoad: UIImageView!
-    var mainCar: UIImageView!
+    
+    @IBOutlet weak var mainCar: MovableUIIMageView!
     
     
     
@@ -33,6 +34,7 @@ class RacerMainController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
 
         setRoad()

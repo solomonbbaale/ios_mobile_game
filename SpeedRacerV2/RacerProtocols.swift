@@ -10,5 +10,6 @@ import Foundation
 
 @objc protocol collisionDelegate{
     @objc func addCarCollision(_ timer:Timer)
+    @objc func addCarCollision(barrierName: String, image:MovableUIIMageView)
 }
 
