@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate{
+class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
     
     
     
@@ -16,39 +16,42 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate{
     let gravityBehaviour = UIGravityBehavior()
     let collisionBehaviour = UICollisionBehavior()
     let dynamicItemBehaviour = UIDynamicItemBehavior()
-    var controller:UIViewController? = nil
+    var controller:RacerMainController? = nil
     
     var score = 0
     
     override init() {
         super.init()
+        
         addChildBehavior(gravityBehaviour)
         addChildBehavior(collisionBehaviour)
         collisionBehaviour.collisionDelegate = self
     }
-    init(controller:UIViewController){
+    init(controller:RacerMainController){
         super.init()
         addChildBehavior(gravityBehaviour)
         addChildBehavior(collisionBehaviour)
         collisionBehaviour.collisionDelegate = self
         self.controller = controller
+        self.setcollisionDelegateListener()
         
     }
     
     
-    func addCar(car: UIImageView){
-        self.dynamicAnimator?.referenceView?.addSubview(car)
-        dynamicItemBehaviour.addItem(car)
-        gravityBehaviour.addItem(car)
-        collisionBehaviour.addItem(car)
+    func addCar(collisionObstacle: UIImageView){
+        self.dynamicAnimator?.referenceView?.addSubview(collisionObstacle)
+        dynamicItemBehaviour.addItem(collisionObstacle)
+        self.addLinearVelocityForItem(collisionObstacle: collisionObstacle)
+        gravityBehaviour.addItem(collisionObstacle)
+        collisionBehaviour.addItem(collisionObstacle)
         
     }
-    func removeCar(car: UIImageView){
-        dynamicItemBehaviour.removeItem(car)
-        dynamicItemBehaviour.linearVelocity(for: car)
-        gravityBehaviour.removeItem(car)
-        collisionBehaviour.removeItem(car)
-        car.removeFromSuperview()
+    func removeCar(collisionObstacle: UIImageView){
+        dynamicItemBehaviour.removeItem(collisionObstacle)
+        dynamicItemBehaviour.linearVelocity(for: collisionObstacle)
+        gravityBehaviour.removeItem(collisionObstacle)
+        collisionBehaviour.removeItem(collisionObstacle)
+        collisionObstacle.removeFromSuperview()
     }
     func cleanup(){
         for  view  in collisionBehaviour.items{
@@ -60,19 +63,64 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate{
         }
         
     }
+    
+    //Random number generator
+    
+    func random(_ range:Range<Int>) -> Int {
+        return range.lowerBound + Int(arc4random_uniform(UInt32(range.upperBound - range.lowerBound)))
+    }
+    
+    
+    
     //@objc public func addCarCollision(barrierName :String, mainCar: UIImageView){
     func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, at p: CGPoint) {
-        print("called this again")
+        //print("called this again")
         //let items = item as! CustomUIIMageView
         //print(items.imageTag!)
         // let viewcontroller = controller as! ViewController
         //viewcontroller.score -= 10
         //viewcontroller.ScoreKeeper.text = String(score)
+        let mainitem = item as! SpeedRacerCustomImage
+        print(mainitem.imageTag!)
+        if(mainitem.imageTag! == "car"){
+            if let score = controller?.score{
+                if(score != 0){
+                controller?.score -= 10
+                }
+            }
+            
+            controller?.scoreBoard?.text = "Score: \(String(describing: controller?.score))"
+            
+        }else if(mainitem.imageTag! == "coin"){
+            self.removeCar(collisionObstacle: item as! UIImageView)
+            
+            controller?.score += 20
+            
+            controller?.scoreBoard?.text = "Score: \(String(describing: controller?.score))"
+        }
         
-        
+        removeOutOfBoundsSubViews()
         
         
     }
+    
+    func removeOutOfBoundsSubViews(){
+        let view = self.dynamicAnimator?.referenceView!
+        for subview in (view?.subviews)!{
+            //print("the subview is \(subview)")
+            let frame = subview.frame
+            if(frame.maxY > (view?.bounds.height)!){
+                self.removeCar(collisionObstacle: subview as! UIImageView)
+            }
+        }
+        
+    }
+    
+    
+    func setcollisionDelegateListener(){
+     controller?.mainCar.movableImageDelegate = self
+    }
+    
     
     
 }
@@ -90,12 +138,42 @@ extension SpeedRacerBehaviour : collisionDelegate {
         //collisionBehaviour.collisionDelegate = dynamicAnimator?.referenceView as? UICollisionBehaviorDelegate
         collisionBehaviour.collisionDelegate = self
     }
+    
+    
+    func addLinearVelocityForItem(collisionObstacle:UIImageView){
+        let cointoss = arc4random_uniform(5)
+        let interval = random(300..<700)
+        
+        
+        switch cointoss {
+        case 0,1:
+            self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:interval), for: collisionObstacle)
+            self.dynamicItemBehaviour.elasticity = 0.7
+            self.dynamicItemBehaviour.allowsRotation = false
+            break
+        case 2,3:
+            self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:300), for: collisionObstacle)
+            self.dynamicItemBehaviour.elasticity = 0.9
+            self.dynamicItemBehaviour.allowsRotation = false
+            break
+        default:
+            self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:interval), for: collisionObstacle)
+            self.dynamicItemBehaviour.elasticity = 0.5;
+            self.dynamicItemBehaviour.allowsRotation = false
+            
+        }
+    }
+    
     @objc func addCarCollision(barrierName: String, image:MovableUIIMageView){
+        
+        
+        
         collisionBehaviour.removeAllBoundaries()
         collisionBehaviour.addBoundary(withIdentifier: barrierName as NSCopying, for: UIBezierPath(rect:image.frame))
         //collisionBehaviour.collisionDelegate = dynamicAnimator?.referenceView as? UICollisionBehaviorDelegate
         collisionBehaviour.collisionDelegate = self
-        print("recieved call \(String(describing: image.startLocation))")
+        
+        
     }
     
 }

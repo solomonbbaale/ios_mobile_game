@@ -18,22 +18,15 @@ class MovableUIIMageView: UIImageView {
         
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             startLocation = touches.first?.location(in:self)
-            print("began")
+            self.movableImageDelegate?.addCarCollision(barrierName: "mainCar", image: self)
         }
         override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
             
             let currentLocation = touches.first?.location(in:self)
             let dx = currentLocation!.x - startLocation!.x
             let dy = currentLocation!.y - startLocation!.y
-            print("touches moved")
-            //self.center = CGPointMake(self.center.x+dx, self.center.y+dy)
             self.center = CGPoint(x:self.center.x+dx,y:self.center.y+dy)
-            if movableImageDelegate != nil{
-                print("got something form the subtypes")
-            }
-            //invoking the addCarCollision every time the
-            //newtimer = Timer.scheduledTimer(timeInterval: 0.01, target:self.movableImageDelegate!, selector: #selector(self.movableImageDelegate?.addCarCollision), userInfo:["barrierName":"mainCar","mainCar":self], repeats:true)
-            //self.movableImageDelegate?.addCarCollision(newtimer)
+            
             self.movableImageDelegate?.addCarCollision(barrierName: "mainCar", image: self)
         }
         
