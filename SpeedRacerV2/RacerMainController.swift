@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class RacerMainController: UIViewController {
 
@@ -31,13 +32,23 @@ class RacerMainController: UIViewController {
     var gamewidth = Int(UIScreen.main.bounds.width)
     var gameheight = Int(UIScreen.main.bounds.height)
     var timer:Timer = Timer()
+    var soundTimer:Timer = Timer()
+    
     var delayBeforeGameEnds = DispatchTime.now() + 20
     var createCarObstacleTimer:Timer = Timer()
     var finishviewloaded:Bool = false
     var countdowntimer:Timer = Timer()
+    public var gameended = false
     
     //countdown for racing
     var countdownfinished = 0
+    
+    
+    //sounds for game
+    
+    var gamePlayer:AVAudioPlayer? = nil
+    var coinPlayer:AVAudioPlayer? = nil
+    
     
     //behaviour configuration
     var speedRaceDynamicAnimator:UIDynamicAnimator!
@@ -47,7 +58,12 @@ class RacerMainController: UIViewController {
     //setting up finishgame strategy
     @objc func dispatchtofinishgame(){
         DispatchQueue.main.asyncAfter(deadline: delayBeforeGameEnds){
+      //  self.gamePlayer?.play()
         self.performSegue(withIdentifier: "moveToFinish", sender: self)
+        self.soundTimer.invalidate()
+        self.gameended = true
+        self.gamePlayer?.stop()
+        self.coinPlayer?.stop()
         }
     }
     
@@ -177,7 +193,7 @@ class RacerMainController: UIViewController {
             let car = self.createCar()
             createdObstacle = SpeedRacerCustomImage(image:car)
             createdObstacle.imageTag = "car"
-            var randomx = self.randomNumberbtnpoints(viewwidth:UInt32(Int32(gamewidth)))
+            let randomx = self.randomNumberbtnpoints(viewwidth:UInt32(Int32(gamewidth)))
             
             
             createdObstacle.frame = CGRect(x:Int(randomx), y: 0, width: (gamewidth / 12), height: (gameheight / 12))
@@ -225,10 +241,46 @@ class RacerMainController: UIViewController {
     }
     
     
+    func soundLoader(filename: String) -> AVAudioPlayer {
+        
+        var player = AVAudioPlayer()
+        let path = Bundle.main.path(forResource:filename, ofType:nil)!
+        let url = URL(fileURLWithPath: path)
+    
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            player = try AVAudioPlayer(contentsOf: url)
+            player.prepareToPlay()
+        } catch let error {
+            print("Error loading \(String(describing: url)): \(error.localizedDescription)")
+        }
+        return player
+    }
+    @objc func playSound1(){
+        self.gamePlayer?.play()
+    }
+    
+    
+    func playSound(){
+        self.gamePlayer = soundLoader(filename:"Race-car-sounds.mp3")
+        soundTimer = Timer.scheduledTimer(timeInterval: 0.0001, target: self, selector: #selector(RacerMainController.playSound1), userInfo: nil, repeats: true)
+        timer.fire()
+        
+    }
+    func playCoinSound(){
+        self.coinPlayer = soundLoader(filename: "Mario-coin-sound.mp3")
+        self.coinPlayer?.play()
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setScore()
+        playSound()
+        
+        
         
         mainCar.frame = CGRect(x:Int(gamewidth/12),y:(gameheight-(gameheight/4)),width:(gamewidth/6),height:(gamewidth/6))
         

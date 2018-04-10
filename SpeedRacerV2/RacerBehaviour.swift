@@ -97,9 +97,10 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
             //let score = controller!.score
             //controller.scoreBoard?.text = "Score: \(String(describing: score))"
             
-        }else if(mainitem.imageTag! == "coin"){
-            self.removeCar(collisionObstacle: item as! UIImageView)
+        }else if(mainitem.imageTag! == "coin" && controller.gameended == false){
             
+            self.removeCar(collisionObstacle: item as! UIImageView)
+            controller.playCoinSound()
             controller.score = (controller.score)! + 20
             //let score = controller!.score
             //controller.scoreBoard?.text = "Score: \(String(describing: score))"

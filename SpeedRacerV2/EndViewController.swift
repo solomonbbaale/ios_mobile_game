@@ -17,10 +17,14 @@ class EndViewController: UIViewController {
         let behaviour = mainview.speedRacerBehaviour
         behaviour?.startAgainCleanUp()
         mainview.timer = Timer.scheduledTimer(timeInterval: 20, target: mainview, selector: #selector(RacerMainController.dispatchtofinishgame), userInfo: nil, repeats: true)
+        mainview.gamePlayer?.play()
         
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let mainview = storyboard?.instantiateViewController(withIdentifier: "mainController") as! RacerMainController
+        mainview.soundTimer.invalidate()
+        mainview.gamePlayer?.stop()
         
         // Do any additional setup after loading the view.
     }

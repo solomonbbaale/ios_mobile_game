@@ -15,6 +15,9 @@
 		DD0D7B6E206656A90076C05D /* SpeedRacerV2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0D7B6D206656A90076C05D /* SpeedRacerV2Tests.swift */; };
 		DD0D7B79206656A90076C05D /* SpeedRacerV2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0D7B78206656A90076C05D /* SpeedRacerV2UITests.swift */; };
 		DD0D7B87206656E60076C05D /* RacerMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0D7B86206656E60076C05D /* RacerMainController.swift */; };
+		DD6A6ADC207CF86D00B359B0 /* Race-car-sounds.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD6A6ADB207CF86D00B359B0 /* Race-car-sounds.mp3 */; };
+		DD6A6ADE207CFD0D00B359B0 /* Gran_Turismo_3_00105.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD6A6ADD207CFD0D00B359B0 /* Gran_Turismo_3_00105.wav */; };
+		DD6A6AE0207D01BC00B359B0 /* Mario-coin-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD6A6ADF207D01BC00B359B0 /* Mario-coin-sound.mp3 */; };
 		DD801F10206D69E800EBCFFF /* SpeedRacerCustomImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD801F0F206D69E800EBCFFF /* SpeedRacerCustomImage.swift */; };
 		DD9A18E0206E64E200315418 /* StartScreenControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9A18DF206E64E200315418 /* StartScreenControllerViewController.swift */; };
 		DDA8CEDD2066623D0041F065 /* RacerBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA8CEDC2066623D0041F065 /* RacerBehaviour.swift */; };
@@ -55,6 +58,9 @@
 		DD0D7B78206656A90076C05D /* SpeedRacerV2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedRacerV2UITests.swift; sourceTree = "<group>"; };
 		DD0D7B7A206656A90076C05D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD0D7B86206656E60076C05D /* RacerMainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacerMainController.swift; sourceTree = "<group>"; };
+		DD6A6ADB207CF86D00B359B0 /* Race-car-sounds.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Race-car-sounds.mp3"; sourceTree = "<group>"; };
+		DD6A6ADD207CFD0D00B359B0 /* Gran_Turismo_3_00105.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Gran_Turismo_3_00105.wav; sourceTree = "<group>"; };
+		DD6A6ADF207D01BC00B359B0 /* Mario-coin-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Mario-coin-sound.mp3"; sourceTree = "<group>"; };
 		DD801F0F206D69E800EBCFFF /* SpeedRacerCustomImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedRacerCustomImage.swift; sourceTree = "<group>"; };
 		DD9A18DF206E64E200315418 /* StartScreenControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenControllerViewController.swift; sourceTree = "<group>"; };
 		DDA8CEDC2066623D0041F065 /* RacerBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacerBehaviour.swift; sourceTree = "<group>"; };
@@ -111,6 +117,9 @@
 		DD0D7B54206656A90076C05D /* SpeedRacerV2 */ = {
 			isa = PBXGroup;
 			children = (
+				DD6A6ADD207CFD0D00B359B0 /* Gran_Turismo_3_00105.wav */,
+				DD6A6ADB207CF86D00B359B0 /* Race-car-sounds.mp3 */,
+				DD6A6ADF207D01BC00B359B0 /* Mario-coin-sound.mp3 */,
 				DD0D7B86206656E60076C05D /* RacerMainController.swift */,
 				DD0D7B55206656A90076C05D /* AppDelegate.swift */,
 				DD0D7B59206656A90076C05D /* Main.storyboard */,
@@ -253,8 +262,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD6A6ADC207CF86D00B359B0 /* Race-car-sounds.mp3 in Resources */,
 				DD0D7B63206656A90076C05D /* LaunchScreen.storyboard in Resources */,
+				DD6A6ADE207CFD0D00B359B0 /* Gran_Turismo_3_00105.wav in Resources */,
 				DD0D7B60206656A90076C05D /* Assets.xcassets in Resources */,
+				DD6A6AE0207D01BC00B359B0 /* Mario-coin-sound.mp3 in Resources */,
 				DD0D7B5B206656A90076C05D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
