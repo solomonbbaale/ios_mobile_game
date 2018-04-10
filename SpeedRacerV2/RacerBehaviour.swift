@@ -16,7 +16,7 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
     let gravityBehaviour = UIGravityBehavior()
     let collisionBehaviour = UICollisionBehavior()
     let dynamicItemBehaviour = UIDynamicItemBehavior()
-    var controller:RacerMainController? = nil
+    var controller:RacerMainController! = nil
     
     var score = 0
     
@@ -25,12 +25,14 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
         
         addChildBehavior(gravityBehaviour)
         addChildBehavior(collisionBehaviour)
+        addChildBehavior(dynamicItemBehaviour)
         collisionBehaviour.collisionDelegate = self
     }
     init(controller:RacerMainController){
         super.init()
         addChildBehavior(gravityBehaviour)
         addChildBehavior(collisionBehaviour)
+        addChildBehavior(dynamicItemBehaviour)
         collisionBehaviour.collisionDelegate = self
         self.controller = controller
         self.setcollisionDelegateListener()
@@ -40,8 +42,12 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
     
     func addCar(collisionObstacle: UIImageView){
         self.dynamicAnimator?.referenceView?.addSubview(collisionObstacle)
+        let image = collisionObstacle as! SpeedRacerCustomImage
+        if(image.imageTag=="car"){
         dynamicItemBehaviour.addItem(collisionObstacle)
         self.addLinearVelocityForItem(collisionObstacle: collisionObstacle)
+        
+        }
         gravityBehaviour.addItem(collisionObstacle)
         collisionBehaviour.addItem(collisionObstacle)
         
@@ -81,22 +87,22 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
         //viewcontroller.score -= 10
         //viewcontroller.ScoreKeeper.text = String(score)
         let mainitem = item as! SpeedRacerCustomImage
-        print(mainitem.imageTag!)
+        
         if(mainitem.imageTag! == "car"){
             if let score = controller?.score{
                 if(score != 0){
-                controller?.score -= 10
+                    controller?.score = (controller?.score)! - 10
                 }
             }
-            
-            controller?.scoreBoard?.text = "Score: \(String(describing: controller?.score))"
+            //let score = controller!.score
+            //controller.scoreBoard?.text = "Score: \(String(describing: score))"
             
         }else if(mainitem.imageTag! == "coin"){
             self.removeCar(collisionObstacle: item as! UIImageView)
             
-            controller?.score += 20
-            
-            controller?.scoreBoard?.text = "Score: \(String(describing: controller?.score))"
+            controller.score = (controller.score)! + 20
+            //let score = controller!.score
+            //controller.scoreBoard?.text = "Score: \(String(describing: score))"
         }
         
         removeOutOfBoundsSubViews()
@@ -112,6 +118,17 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
             if(frame.maxY > (view?.bounds.height)!){
                 self.removeCar(collisionObstacle: subview as! UIImageView)
             }
+        }
+        
+    }
+    
+    func startAgainCleanUp(){
+        let view = self.dynamicAnimator?.referenceView!
+        for subview in (view?.subviews)!{
+            //print("the subview is \(subview)")
+            //let frame = subview.frame
+            self.removeCar(collisionObstacle: subview as! UIImageView)
+            
         }
         
     }
@@ -148,17 +165,23 @@ extension SpeedRacerBehaviour : collisionDelegate {
         switch cointoss {
         case 0,1:
             self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:interval), for: collisionObstacle)
-            self.dynamicItemBehaviour.elasticity = 0.7
+            self.dynamicItemBehaviour.elasticity = 0.2
+            self.dynamicItemBehaviour.resistance = 0.4
+            self.dynamicItemBehaviour.charge = .greatestFiniteMagnitude
             self.dynamicItemBehaviour.allowsRotation = false
             break
         case 2,3:
             self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:300), for: collisionObstacle)
-            self.dynamicItemBehaviour.elasticity = 0.9
+            self.dynamicItemBehaviour.elasticity = 0.4
+            self.dynamicItemBehaviour.resistance = 0.2
+            self.dynamicItemBehaviour.charge = .greatestFiniteMagnitude
             self.dynamicItemBehaviour.allowsRotation = false
             break
         default:
             self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:interval), for: collisionObstacle)
             self.dynamicItemBehaviour.elasticity = 0.5;
+            self.dynamicItemBehaviour.resistance = 0.1
+            self.dynamicItemBehaviour.charge = .greatestFiniteMagnitude
             self.dynamicItemBehaviour.allowsRotation = false
             
         }

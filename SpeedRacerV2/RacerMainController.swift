@@ -22,7 +22,7 @@ class RacerMainController: UIViewController {
     @IBOutlet weak var scoreBoard: UILabel!
     @IBOutlet weak var countDown: UIImageView!
     //Score stuff
-    var score = 0
+    var score:Int32! = 0
     
     
     //other variables
@@ -171,19 +171,22 @@ class RacerMainController: UIViewController {
         
         var createdObstacle:SpeedRacerCustomImage!
         
+        
         switch randomnumber {
         case 0,2,3,5:
             let car = self.createCar()
             createdObstacle = SpeedRacerCustomImage(image:car)
             createdObstacle.imageTag = "car"
-            let randomx = self.randomNumberbtnpoints(viewwidth:UInt32(Int32(gamewidth)))
+            var randomx = self.randomNumberbtnpoints(viewwidth:UInt32(Int32(gamewidth)))
+            
+            
             createdObstacle.frame = CGRect(x:Int(randomx), y: 0, width: (gamewidth / 12), height: (gameheight / 12))
         default:
             let coin = self.addCoins()
             createdObstacle = SpeedRacerCustomImage(image:coin)
             createdObstacle.imageTag = "coin"
             let randomx = self.randomNumberbtnpoints(viewwidth:UInt32(Int32(gamewidth)))
-            createdObstacle.frame = CGRect(x:Int(randomx), y: 0, width: (gamewidth / 16), height: (gameheight / 16))
+            createdObstacle.frame = CGRect(x:Int(randomx), y: 0, width: (gamewidth / 20), height: (gameheight / 20))
         }
         
         
@@ -193,11 +196,11 @@ class RacerMainController: UIViewController {
         //RESET THE TIMER FOR THE CAR USING RANDOM NUMBER
         let randomTimerInterval = arc4random_uniform(2)
         if(randomTimerInterval == 1){
-            self.createCarObstacleTimer = Timer.scheduledTimer(timeInterval:0.5, target:self, selector: #selector(RacerMainController.addGameCars), userInfo:nil, repeats:true)
+            self.createCarObstacleTimer = Timer.scheduledTimer(timeInterval:0.8, target:self, selector: #selector(RacerMainController.addGameCars), userInfo:nil, repeats:true)
         }else {
-            self.createCarObstacleTimer = Timer.scheduledTimer(timeInterval:0.08, target:self, selector: #selector(RacerMainController.addGameCars), userInfo:nil, repeats:true)
+            self.createCarObstacleTimer = Timer.scheduledTimer(timeInterval:0.009, target:self, selector: #selector(RacerMainController.addGameCars), userInfo:nil, repeats:true)
         }
-        
+        speedRacerBehaviour?.removeOutOfBoundsSubViews()
       
     }
     
@@ -218,7 +221,7 @@ class RacerMainController: UIViewController {
     
     
     func setScore(){
-        self.scoreBoard?.text = "Score: \(self.score)"
+        self.scoreBoard?.text = "Score: \(self.score!)"
     }
     
     

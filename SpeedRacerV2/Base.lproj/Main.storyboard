@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="u8d-8N-GDS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="u8d-8N-GDS">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -84,7 +84,7 @@
                                 <color key="textColor" red="0.11113182222536558" green="0.28973054358213424" blue="0.91921168565750122" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="number0" translatesAutoresizingMaskIntoConstraints="NO" id="lKh-TK-VLO">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="number0" translatesAutoresizingMaskIntoConstraints="NO" id="lKh-TK-VLO">
                                 <rect key="frame" x="85" y="272" width="204" height="123"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="123" id="xRS-VA-SWu"/>
@@ -191,7 +191,6 @@
         <image name="racingstartscreen" width="1280" height="720"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LN7-hT-18m"/>
         <segue reference="h4S-A5-A4O"/>
     </inferredMetricsTieBreakers>
 </document>
