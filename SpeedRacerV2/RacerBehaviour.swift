@@ -17,6 +17,8 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
     let collisionBehaviour = UICollisionBehavior()
     let dynamicItemBehaviour = UIDynamicItemBehavior()
     var controller:RacerMainController! = nil
+    var finishTimer:Timer = Timer()
+    var delayBeforeGameEnds = DispatchTime.now() + 6
     
     var score = 0
     
@@ -86,12 +88,17 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
         // let viewcontroller = controller as! ViewController
         //viewcontroller.score -= 10
         //viewcontroller.ScoreKeeper.text = String(score)
+        //
+        removeOutOfBoundsSubViews()
         let mainitem = item as! SpeedRacerCustomImage
         
-        if(mainitem.imageTag! == "car"){
+        
+        if(mainitem.imageTag! == "car" && controller.gameended == false){
+            controller.noofofaccidents += 1
             if let score = controller?.score{
-                if(score != 0){
-                    controller?.score = (controller?.score)! - 10
+                if(score-20 == 0 || score-20 > 0 ){
+                    controller.score = (controller.score) - 10
+                    controller.setScore()
                 }
             }
             //let score = controller!.score
@@ -101,7 +108,10 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
             
             self.removeCar(collisionObstacle: item as! UIImageView)
             controller.playCoinSound()
-            controller.score = (controller.score)! + 20
+            controller.score = (controller.score) + 20
+            controller.coins = (controller.coins) + 10
+            controller.setScore()
+            
             //let score = controller!.score
             //controller.scoreBoard?.text = "Score: \(String(describing: score))"
         }
@@ -160,27 +170,27 @@ extension SpeedRacerBehaviour : collisionDelegate {
     
     func addLinearVelocityForItem(collisionObstacle:UIImageView){
         let cointoss = arc4random_uniform(5)
-        let interval = random(300..<700)
+        let interval = random(300..<1000)
         
         
         switch cointoss {
         case 0,1:
             self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:interval), for: collisionObstacle)
-            self.dynamicItemBehaviour.elasticity = 0.2
-            self.dynamicItemBehaviour.resistance = 0.4
+            self.dynamicItemBehaviour.elasticity = 0.1
+            self.dynamicItemBehaviour.resistance = 1
             self.dynamicItemBehaviour.charge = .greatestFiniteMagnitude
             self.dynamicItemBehaviour.allowsRotation = false
             break
         case 2,3:
             self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:300), for: collisionObstacle)
-            self.dynamicItemBehaviour.elasticity = 0.4
-            self.dynamicItemBehaviour.resistance = 0.2
+            self.dynamicItemBehaviour.elasticity = 0.1
+            self.dynamicItemBehaviour.resistance = 1
             self.dynamicItemBehaviour.charge = .greatestFiniteMagnitude
             self.dynamicItemBehaviour.allowsRotation = false
             break
         default:
             self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:interval), for: collisionObstacle)
-            self.dynamicItemBehaviour.elasticity = 0.5;
+            self.dynamicItemBehaviour.elasticity = 0.2;
             self.dynamicItemBehaviour.resistance = 0.1
             self.dynamicItemBehaviour.charge = .greatestFiniteMagnitude
             self.dynamicItemBehaviour.allowsRotation = false
