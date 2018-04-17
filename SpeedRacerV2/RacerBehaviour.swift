@@ -126,9 +126,16 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
         for subview in (view?.subviews)!{
             //print("the subview is \(subview)")
             let frame = subview.frame
+            
+            if(!subview.isEqual(controller.mainRoad)){
+            if(frame.maxX > controller.mainRoad.frame.maxY){
+                self.removeCar(collisionObstacle: subview as! UIImageView)
+            }
             if(frame.maxY > (view?.bounds.height)!){
                 self.removeCar(collisionObstacle: subview as! UIImageView)
             }
+            }
+            
         }
         
     }
