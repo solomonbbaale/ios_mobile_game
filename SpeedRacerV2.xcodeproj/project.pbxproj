@@ -23,6 +23,7 @@
 		DDA8CEDD2066623D0041F065 /* RacerBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA8CEDC2066623D0041F065 /* RacerBehaviour.swift */; };
 		DDA8CEDF206663290041F065 /* RacerProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA8CEDE206663290041F065 /* RacerProtocols.swift */; };
 		DDCF74C02068616B001C4D89 /* MovableUIIMageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF74BF2068616B001C4D89 /* MovableUIIMageView.swift */; };
+		DDE80AD520882035000FD8DA /* explosion-01.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE80AD420882035000FD8DA /* explosion-01.mp3 */; };
 		DDF71B5B206E731F00146D45 /* EndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF71B5A206E731F00146D45 /* EndViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		DDA8CEDC2066623D0041F065 /* RacerBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacerBehaviour.swift; sourceTree = "<group>"; };
 		DDA8CEDE206663290041F065 /* RacerProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacerProtocols.swift; sourceTree = "<group>"; };
 		DDCF74BF2068616B001C4D89 /* MovableUIIMageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovableUIIMageView.swift; sourceTree = "<group>"; };
+		DDE80AD420882035000FD8DA /* explosion-01.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "explosion-01.mp3"; sourceTree = "<group>"; };
 		DDF71B5A206E731F00146D45 /* EndViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -119,6 +121,7 @@
 			children = (
 				DD6A6ADD207CFD0D00B359B0 /* Gran_Turismo_3_00105.wav */,
 				DD6A6ADB207CF86D00B359B0 /* Race-car-sounds.mp3 */,
+				DDE80AD420882035000FD8DA /* explosion-01.mp3 */,
 				DD6A6ADF207D01BC00B359B0 /* Mario-coin-sound.mp3 */,
 				DD0D7B86206656E60076C05D /* RacerMainController.swift */,
 				DD0D7B55206656A90076C05D /* AppDelegate.swift */,
@@ -262,6 +265,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDE80AD520882035000FD8DA /* explosion-01.mp3 in Resources */,
 				DD6A6ADC207CF86D00B359B0 /* Race-car-sounds.mp3 in Resources */,
 				DD0D7B63206656A90076C05D /* LaunchScreen.storyboard in Resources */,
 				DD6A6ADE207CFD0D00B359B0 /* Gran_Turismo_3_00105.wav in Resources */,

@@ -17,7 +17,9 @@ class MovableUIIMageView: UIImageView {
         var newtimer: Timer = Timer()
         let viewwidth = UIScreen.main.bounds.size.width
         let viewheight = UIScreen.main.bounds.size.height
+    
         
+    
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             startLocation = touches.first?.location(in:self)
             self.movableImageDelegate?.addCarCollision(barrierName: "mainCar", image: self)
@@ -47,9 +49,9 @@ class MovableUIIMageView: UIImageView {
         
         //CODE IDEA FROM
         //http://iosdevelopertips.com/graphics/drag-an-image-within-the-bounds-of-superview.html
-        let midpointx = viewwidth/12.5
+        let midpointx = viewwidth/7.5
         var result:CGFloat? = nil
-        
+        //12.5
         
         
         if(x>(viewwidth-midpointx)){

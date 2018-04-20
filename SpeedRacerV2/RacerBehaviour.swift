@@ -115,6 +115,10 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
             //let score = controller!.score
             //controller.scoreBoard?.text = "Score: \(String(describing: score))"
         }
+         else if (mainitem.imageTag! == "fire" && controller.gameended==false){
+            self.endGameExplosion()
+        }
+    
         
         removeOutOfBoundsSubViews()
         
@@ -156,6 +160,28 @@ class SpeedRacerBehaviour: UIDynamicBehavior, UICollisionBehaviorDelegate {
      controller?.mainCar.movableImageDelegate = self
     }
     
+    func endGameExplosion(){
+        
+        //  self.gamePlayer?.play()
+        self.removeOutOfBoundsSubViews()
+        self.cleanup()
+        self.controller.playExplosionSound()
+        self.controller.mainCar.image = UIImage(named: "explosion")
+        
+        self.controller.playExplosionSound()
+        self.controller.playExplosionSound()
+        usleep(10000)
+        self.controller.soundTimer.invalidate()
+        self.controller.gameended = true
+        self.controller.gamePlayer?.stop()
+        //self.controller.explosionPlayer?.stop()
+        self.controller.coinPlayer?.stop()
+        
+        self.controller.performSegue(withIdentifier: "moveToFinish", sender: self)
+        //self.cleanup()
+        
+    }
+    
     
     
 }
@@ -189,11 +215,18 @@ extension SpeedRacerBehaviour : collisionDelegate {
             self.dynamicItemBehaviour.allowsRotation = false
             break
         case 2,3:
+            if let image =  collisionObstacle as? SpeedRacerCustomImage{
+                if(image.imageTag == "car"){
+                  self.dynamicItemBehaviour.allowsRotation = true
+                }else{
+                    self.dynamicItemBehaviour.allowsRotation = false
+                }
+            }
             self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:300), for: collisionObstacle)
             self.dynamicItemBehaviour.elasticity = 0.1
             self.dynamicItemBehaviour.resistance = 1
             self.dynamicItemBehaviour.charge = .greatestFiniteMagnitude
-            self.dynamicItemBehaviour.allowsRotation = false
+            
             break
         default:
             self.dynamicItemBehaviour.addLinearVelocity(CGPoint(x:0,y:interval), for: collisionObstacle)
@@ -212,7 +245,7 @@ extension SpeedRacerBehaviour : collisionDelegate {
         collisionBehaviour.removeAllBoundaries()
         collisionBehaviour.addBoundary(withIdentifier: barrierName as NSCopying, for: UIBezierPath(rect:image.frame))
         //collisionBehaviour.collisionDelegate = dynamicAnimator?.referenceView as? UICollisionBehaviorDelegate
-        collisionBehaviour.collisionDelegate = self
+        //collisionBehaviour.collisionDelegate = self
         
         
     }

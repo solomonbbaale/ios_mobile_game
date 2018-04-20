@@ -23,6 +23,8 @@ class RacerMainController: UIViewController {
     
     @IBOutlet weak var scoreBoard: UILabel!
     
+    @IBOutlet weak var startcountdownnumber: UIImageView!
+    @IBOutlet weak var startRaceRoad: UIImageView!
     @IBOutlet weak var countDown: UIImageView!
     //Score stuff
     var score = 0
@@ -54,6 +56,7 @@ class RacerMainController: UIViewController {
     
     var gamePlayer:AVAudioPlayer? = nil
     var coinPlayer:AVAudioPlayer? = nil
+    var explosionPlayer:AVAudioPlayer? = nil
     
     
     //behaviour configuration
@@ -93,23 +96,29 @@ class RacerMainController: UIViewController {
     
     
     @objc func countdowntimerfunc(){
-        if(self.countdownfinished < 5){
+        
+        if(self.countdownfinished < 4){
             self.countdownfinished = countdownfinished+1
-            self.countDown.image = UIImage(named:"number\(self.countdownfinished).png")
-            
+            self.startcountdownnumber.image = UIImage(named:"number\(self.countdownfinished).png")
+            //self.countdowntimer.fire()
             
         }else{
-            self.countdowntimer.invalidate()
+           // self.countdowntimer.invalidate()
             self.countDown.isHidden = true
+            //self.startcountdownnumber.isHidden = true
             
-            //self.firstroad.isHidden = true
+            self.startRaceRoad.isHidden = true
+            //self.countdowntimer.invalidate()
+            self.runGame()
         }
+        //self.countdowntimer.fire()
         
     }
     
     func startCountDown(){
-        countdowntimerfunc()
-        self.countdowntimer = Timer(timeInterval:0.1, target:self, selector: #selector(RacerMainController.countdowntimerfunc), userInfo: nil, repeats: true)
+        self.countdowntimer = Timer(timeInterval:1, target:self, selector: #selector(RacerMainController.countdowntimerfunc), userInfo: nil, repeats: true)
+        //self.countdowntimer.fire()
+        
     }
     
     
@@ -194,6 +203,12 @@ class RacerMainController: UIViewController {
         return coin
     }
     
+    func addFire()->UIImage{
+        let fire = UIImage(named:"explosion")!
+        
+        return fire
+    }
+    
     
     func randombtnRange(_ range:Range<Int>) -> Int {
         return range.lowerBound + Int(arc4random_uniform(UInt32(range.upperBound - range.lowerBound)))
@@ -206,20 +221,30 @@ class RacerMainController: UIViewController {
         self.createCarObstacleTimer.invalidate();
         //var cars = createCars()
         
-        let randomnumber = arc4random_uniform(7)
+       // let randomnumber = arc4random_uniform(7)
+        let randomnumber = arc4random_uniform(10)
         
         var createdObstacle:SpeedRacerCustomImage!
         
         let randx = self.randombtnRange((gamewidth / 7)..<(gamewidth - (gamewidth / 5)))
 
         switch randomnumber {
-        case 0,2,3,5,6,7:
+        case 0,2,3,5,6:
             let car = self.createCar()
             createdObstacle = SpeedRacerCustomImage(image:car)
             createdObstacle.imageTag = "car"
             
             
             createdObstacle.frame = CGRect(x:Int(randx), y: 0, width: (gamewidth / 12), height: (gameheight / 12))
+            break
+        case 7,8,9:
+            let fire = self.addFire()
+            createdObstacle = SpeedRacerCustomImage(image:fire)
+            createdObstacle.imageTag = "fire"
+            
+            
+            createdObstacle.frame = CGRect(x:Int(randx), y: 0, width: (gamewidth / 6), height: (gameheight / 6))
+            break
         default:
             let coin = self.addCoins()
             createdObstacle = SpeedRacerCustomImage(image:coin)
@@ -253,8 +278,9 @@ class RacerMainController: UIViewController {
         
         speedRaceDynamicAnimator = UIDynamicAnimator(referenceView:self.view)
         speedRacerBehaviour = SpeedRacerBehaviour(controller:self)
-        speedRacerBehaviour.addCarCollision(barrierName: "mainCar", image: mainCar)
         speedRaceDynamicAnimator.addBehavior(speedRacerBehaviour)
+        speedRacerBehaviour.addCarCollision(barrierName: "mainCar", image: mainCar)
+        //speedRaceDynamicAnimator.addBehavior(speedRacerBehaviour)
         
     }
     
@@ -302,18 +328,33 @@ class RacerMainController: UIViewController {
         self.coinPlayer?.play()
     }
     
+    func playExplosionSound(){
+        self.explosionPlayer = soundLoader(filename: "explosion-01.mp3")
+        self.explosionPlayer?.play()
+    }
+    
+    
     
     @IBOutlet weak var coinsText: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.runGame()
+        
+        
+    }
+    
+    func runGame(){
+        print(self.countdownfinished)
         self.scoreBoard.textAlignment = .right
         setScore()
-        self.setBehaviours()
         mainCar.frame = CGRect(x:Int(gamewidth/12),y:(gameheight-(gameheight/4)),width:(gamewidth/6),height:(gamewidth/6))
-
+        
         setRoad()
+        self.setBehaviours()
         addGameCars()
+        
+
         self.dispatchtofinishgame()
         playSound()
         
@@ -323,10 +364,7 @@ class RacerMainController: UIViewController {
         
         
         
-        //mainCar.frame = CGRect(x:Int(gamewidth/12),y:(gameheight-(gameheight/4)),width:(gamewidth/6),height:(gamewidth/6))
-        
         self.createCarObstacleTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(RacerMainController.addGameCars), userInfo: nil, repeats:true)
-        
         
     }
     
@@ -334,7 +372,7 @@ class RacerMainController: UIViewController {
         super.viewDidAppear(animated)
         
         
-        self.dispatchtofinishgame()
+        //self.dispatchtofinishgame()
     }
 
     override func didReceiveMemoryWarning() {

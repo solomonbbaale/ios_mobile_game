@@ -16,8 +16,9 @@ class EndViewController: UIViewController {
     @IBAction func replyClicked(_ sender: Any) {
         performSegue(withIdentifier: "replySegue", sender: self)
         let mainview = storyboard?.instantiateViewController(withIdentifier: "mainController") as! RacerMainController
-       
+        mainview.explosionPlayer?.stop()
         let behaviour = mainview.speedRacerBehaviour
+        behaviour?.removeOutOfBoundsSubViews()
         behaviour?.startAgainCleanUp()
         mainview.timer = Timer.scheduledTimer(timeInterval: 20, target: mainview, selector: #selector(RacerMainController.dispatchtofinishgame), userInfo: nil, repeats: true)
         mainview.gamePlayer?.play()
